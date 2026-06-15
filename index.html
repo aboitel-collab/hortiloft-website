@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hortiloft</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #2d6a4f;
+      --green-light: #52b788;
+      --green-pale: #d8f3dc;
+      --dark: #1b1b1b;
+      --gray: #555;
+      --white: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    nav .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--green); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background: linear-gradient(160deg, var(--green-pale) 0%, #fff 60%);
+    }
+
+    #hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 1.2rem;
+      line-height: 1.15;
+    }
+
+    #hero p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--green);
+      color: var(--white);
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn:hover { background: var(--green-light); transform: translateY(-2px); }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--gray);
+      max-width: 580px;
+      margin: 0 auto 3rem;
+    }
+
+    /* À PROPOS */
+    #about { background: #fff; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-grid img {
+      width: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      background: var(--green-pale);
+    }
+
+    .about-text h3 {
+      font-size: 1.4rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .about-text p { color: var(--gray); margin-bottom: 1rem; }
+
+    /* SERVICES */
+    #services { background: var(--green-pale); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+    .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+
+    .card h3 { font-size: 1.1rem; color: var(--green); margin-bottom: 0.5rem; }
+
+    .card p { color: var(--gray); font-size: 0.95rem; }
+
+    /* CONTACT */
+    #contact { background: var(--white); }
+
+    form {
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    form input, form textarea {
+      padding: 0.85rem 1.1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    form input:focus, form textarea:focus { border-color: var(--green-light); }
+
+    form textarea { min-height: 140px; resize: vertical; }
+
+    form .btn { align-self: flex-start; border: none; cursor: pointer; }
+
+    /* FOOTER */
+    footer {
+      background: var(--green);
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      nav ul { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#hero" class="logo">Hortiloft</a>
+    <ul>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div>
+      <h1>Cultivez votre espace,<br>révélez votre jardin</h1>
+      <p>Hortiloft vous accompagne dans la création et l'entretien d'espaces verts sur mesure, pour particuliers et professionnels.</p>
+      <a href="#contact" class="btn">Demander un devis</a>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">À propos</h2>
+      <p class="section-sub">Une passion pour le végétal, une expertise au service de vos projets.</p>
+      <div class="about-grid">
+        <div style="background: var(--green-pale); border-radius: 16px; aspect-ratio: 4/3;"></div>
+        <div class="about-text">
+          <h3>Notre histoire</h3>
+          <p>Hortiloft est né de la conviction que chaque espace mérite d'être transformé en un lieu vivant, verdoyant et accueillant.</p>
+          <p>Notre équipe de paysagistes passionnés met son savoir-faire au service de vos envies, des jardins privés aux terrasses d'entreprise.</p>
+          <a href="#contact" class="btn">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">Nos services</h2>
+      <p class="section-sub">Des prestations complètes pour tous vos projets d'aménagement paysager.</p>
+      <div class="services-grid">
+        <div class="card">
+          <div class="card-icon">🌿</div>
+          <h3>Création de jardins</h3>
+          <p>Conception et réalisation d'espaces verts sur mesure, adaptés à votre style et votre terrain.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">✂️</div>
+          <h3>Entretien</h3>
+          <p>Taille, tonte, désherbage et soin des plantations tout au long de l'année.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌸</div>
+          <h3>Plantation</h3>
+          <p>Sélection et mise en place de végétaux adaptés à votre sol et à votre exposition.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏡</div>
+          <h3>Aménagement extérieur</h3>
+          <p>Terrasses, allées, clôtures et éléments décoratifs pour sublimer vos extérieurs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Un projet ? Une question ? Écrivez-nous, nous vous répondons rapidement.</p>
+      <form>
+        <input type="text" placeholder="Votre nom" required />
+        <input type="email" placeholder="Votre email" required />
+        <input type="text" placeholder="Sujet" />
+        <textarea placeholder="Votre message..."></textarea>
+        <button type="submit" class="btn">Envoyer</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Hortiloft — Tous droits réservés</p>
+  </footer>
+
+</body>
+</html>
