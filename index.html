@@ -3,302 +3,814 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hortiloft</title>
+  <title>HortiLoft — Espace de réunion · Amiens</title>
+  <meta name="description" content="HortiLoft, espace de réunion professionnel à Amiens, à deux pas des Hortillonnages. Idéal pour réunions, formations, séminaires et ateliers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* === RESET === */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #2d6a4f;
-      --green-light: #52b788;
-      --green-pale: #d8f3dc;
-      --dark: #1b1b1b;
-      --gray: #555;
-      --white: #fff;
+      --vert:  #2A5A4E;
+      --or:    #C8943A;
+      --brume: #EAF3F0;
+      --lin:   #F7F5F0;
+      --foret: #1A2E28;
+      --blanc: #FFFFFF;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      color: var(--dark);
-      line-height: 1.6;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      color: var(--foret);
+      background: var(--lin);
+      line-height: 1.65;
     }
 
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #e8e8e8;
-    }
+    h1, h2 { font-family: 'Lora', serif; font-weight: 700; }
+    h1 { font-size: 48px; line-height: 1.12; }
+    h2 { font-size: 32px; line-height: 1.2; }
+    h3 { font-size: 18px; font-weight: 700; font-family: 'Poppins', sans-serif; }
 
-    nav .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--green);
-      text-decoration: none;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav ul a {
-      text-decoration: none;
-      color: var(--gray);
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-
-    nav ul a:hover { color: var(--green); }
-
-    /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      background: linear-gradient(160deg, var(--green-pale) 0%, #fff 60%);
-    }
-
-    #hero h1 {
-      font-size: clamp(2.2rem, 6vw, 4rem);
-      font-weight: 800;
-      color: var(--green);
-      margin-bottom: 1.2rem;
-      line-height: 1.15;
-    }
-
-    #hero p {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--gray);
-      max-width: 600px;
-      margin: 0 auto 2.5rem;
-    }
-
+    /* === BUTTONS === */
     .btn {
       display: inline-block;
-      padding: 0.85rem 2.2rem;
-      background: var(--green);
-      color: var(--white);
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn:hover { background: var(--green-light); transform: translateY(-2px); }
-
-    /* SECTIONS */
-    section { padding: 5rem 2rem; }
-
-    .container { max-width: 1000px; margin: 0 auto; }
-
-    .section-title {
-      text-align: center;
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      padding: 13px 30px;
+      border-radius: 6px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
       font-weight: 700;
-      color: var(--green);
-      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      text-decoration: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .btn-vert  { background: var(--vert); color: var(--blanc); border-color: var(--vert); }
+    .btn-vert:hover  { background: #1e4238; border-color: #1e4238; }
+    .btn-or    { background: var(--or); color: var(--blanc); border-color: var(--or); }
+    .btn-or:hover    { background: #a87830; border-color: #a87830; }
+    .btn-outline { background: transparent; color: var(--blanc); border-color: var(--blanc); }
+    .btn-outline:hover { background: rgba(255,255,255,.12); }
+
+    /* === NAVBAR === */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 72px;
+      background: var(--blanc);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      transition: box-shadow .3s;
+    }
+    #navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.09); }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .nav-brand-name {
+      font-family: 'Lora', serif; font-weight: 700; font-size: 22px;
+      color: var(--vert);
     }
 
-    .section-sub {
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px; font-weight: 600; color: var(--foret);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--vert); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--foret); border-radius: 2px; transition: all .3s;
+    }
+
+    #nav-mobile {
+      display: none; position: fixed; top: 72px; left: 0; right: 0; z-index: 999;
+      background: var(--blanc); flex-direction: column; gap: .5rem;
+      padding: 1.5rem 2rem 2rem;
+      box-shadow: 0 12px 32px rgba(0,0,0,.1);
+    }
+    #nav-mobile.open { display: flex; }
+    #nav-mobile a {
+      font-size: 15px; font-weight: 600; color: var(--foret);
+      text-decoration: none; padding: .65rem 0;
+      border-bottom: 1px solid var(--brume);
+    }
+    #nav-mobile .btn { margin-top: .75rem; text-align: center; }
+
+    /* === SECTIONS LAYOUT === */
+    section { padding: 88px 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .14em; color: var(--or);
+      margin-bottom: .6rem;
+    }
+    .section-title       { color: var(--vert); margin-bottom: 1rem; }
+    .section-title.white { color: var(--blanc); }
+    .section-title.center { text-align: center; }
+
+    .sub {
+      font-size: 16px; color: #6b7c79;
+      max-width: 600px; margin-bottom: 3rem;
+    }
+    .sub.wide   { max-width: 760px; }
+    .sub.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .sub.light  { color: rgba(255,255,255,.7); }
+
+    /* === FADE-IN === */
+    .fi {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fi.vis { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       1. HERO
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(150deg, var(--vert) 0%, var(--foret) 100%);
+      display: flex; align-items: center; justify-content: center;
       text-align: center;
-      color: var(--gray);
-      max-width: 580px;
-      margin: 0 auto 3rem;
+      padding: 112px 2rem 80px;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 65% 35%, rgba(200,148,58,.1) 0%, transparent 55%);
+    }
+    #hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to bottom, transparent, rgba(26,46,40,.5));
     }
 
-    /* À PROPOS */
-    #about { background: #fff; }
+    .hero-inner { position: relative; z-index: 1; max-width: 760px; }
 
-    .about-grid {
+    .hero-logomark { margin: 0 auto 1.75rem; display: block; }
+
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1.25rem;
+    }
+    #hero h1 { color: var(--blanc); margin-bottom: .9rem; }
+
+    .hero-tagline { font-size: 18px; color: rgba(255,255,255,.85); margin-bottom: .4rem; }
+    .hero-loc     { font-size: 14px; color: var(--or); margin-bottom: 2.5rem; }
+
+    .badges {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: .75rem;
+      margin-bottom: 2.5rem;
+    }
+    .badge {
+      padding: 7px 20px;
+      border: 1.5px solid rgba(255,255,255,.45);
+      border-radius: 50px;
+      font-size: 13px; font-weight: 600; color: var(--blanc);
+    }
+
+    .hero-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    /* =============================================
+       2. PRÉSENTATION
+    ============================================= */
+    #presentation { background: var(--lin); }
+
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+
+    .stat-card {
+      background: var(--vert); border-radius: 14px; padding: 2.25rem 2rem; text-align: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(42,90,78,.25); }
+
+    .stat-num {
+      font-family: 'Lora', serif; font-weight: 700; font-size: 32px;
+      color: var(--or); display: block; margin-bottom: .3rem;
+    }
+    .stat-lbl { font-size: 13px; font-weight: 600; color: var(--blanc); }
+
+    /* =============================================
+       3. ÉQUIPEMENTS
+    ============================================= */
+    #equipements { background: var(--brume); }
+
+    .equip-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-bottom: 2rem; }
+
+    .equip-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--blanc); border-radius: 10px; padding: 1.1rem 1.4rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .equip-item:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(42,90,78,.1); }
+
+    .dot-or { width: 10px; height: 10px; background: var(--or); border-radius: 50%; flex-shrink: 0; }
+
+    .equip-item span { font-size: 15px; font-weight: 600; color: var(--foret); }
+
+    .equip-banner {
+      background: var(--blanc); border-radius: 12px; padding: 1.5rem 2rem;
+      border-left: 4px solid var(--or); display: flex; flex-direction: column; gap: .3rem;
+    }
+    .equip-banner strong {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--vert);
+    }
+    .equip-banner p { font-size: 14px; color: var(--foret); }
+
+    /* =============================================
+       4. SERVICES
+    ============================================= */
+    #services { background: var(--lin); }
+
+    .services-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+    .service-list { list-style: none; }
+    .service-list li {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .75rem 0; border-bottom: 1px solid rgba(42,90,78,.1);
+      font-size: 15px; font-weight: 600; color: var(--foret);
+    }
+    .service-list li:last-child { border-bottom: none; }
+    .dot-or-sm { width: 8px; height: 8px; background: var(--or); border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+
+    .cuisine-box h3 { color: var(--vert); margin-bottom: 1rem; }
+    .cuisine-box p  { color: #6b7c79; font-size: 15px; line-height: 1.8; }
+
+    .services-banner {
+      background: var(--vert); border-radius: 12px; padding: 1.5rem 2rem;
+      text-align: center; margin-top: 3rem;
+      font-size: 14px; font-weight: 700; letter-spacing: .05em; color: var(--blanc);
+    }
+
+    /* =============================================
+       5. AMBIANCE
+    ============================================= */
+    #ambiance { background: var(--foret); }
+
+    .ambiance-or   { font-family: 'Lora',serif; font-style: italic; font-size: 18px; color: var(--or); display: block; margin-bottom: .5rem; }
+    .ambiance-body { color: rgba(255,255,255,.75); font-size: 16px; max-width: 700px; margin-bottom: 3rem; }
+
+    .ambiance-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+
+    .ambiance-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px; padding: 1.75rem;
+      transition: background .2s, transform .2s;
+    }
+    .ambiance-card:hover { background: rgba(255,255,255,.1); transform: translateY(-3px); }
+    .ambiance-card h3 { color: var(--blanc); font-size: 16px; }
+
+    /* =============================================
+       6. ACCESSIBILITÉ
+    ============================================= */
+    #accessibilite { background: var(--brume); }
+
+    .access-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-bottom: 2rem; }
+
+    .access-card {
+      background: var(--blanc); border-radius: 12px; padding: 1.75rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .access-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(42,90,78,.1); }
+    .access-card h3 { color: var(--vert); font-size: 17px; margin-bottom: .5rem; }
+    .access-card p  { color: #6b7c79; font-size: 14px; }
+
+    .map-block {
+      background: var(--blanc); border-radius: 14px; padding: 2.5rem;
+      text-align: center; border: 2px dashed rgba(42,90,78,.18);
+    }
+    .map-pin { font-size: 2.2rem; margin-bottom: .75rem; }
+    .map-block strong { display: block; font-size: 16px; font-weight: 700; color: var(--foret); margin-bottom: .3rem; }
+    .map-block span   { font-size: 14px; color: #6b7c79; }
+
+    /* =============================================
+       7. POURQUOI HORTILOFT
+    ============================================= */
+    #pourquoi {
+      background: var(--vert);
+      position: relative; overflow: hidden;
+    }
+    #pourquoi::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    #pourquoi .container { position: relative; z-index: 1; }
+
+    .pourquoi-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem; margin-top: 3rem;
     }
 
-    .about-grid img {
-      width: 100%;
-      border-radius: 16px;
-      object-fit: cover;
-      aspect-ratio: 4/3;
-      background: var(--green-pale);
+    .pourquoi-card {
+      background: var(--foret); border-radius: 10px;
+      padding: 1.6rem 1.6rem 1.6rem 1.8rem;
+      border-left: 4px solid var(--or);
+      transition: border-left-width .2s, transform .2s, box-shadow .2s;
+    }
+    .pourquoi-card:hover {
+      border-left-width: 8px;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+    .pourquoi-card h3 { color: var(--blanc); font-size: 16px; margin-bottom: .35rem; }
+    .pourquoi-card p  { color: rgba(255,255,255,.6); font-size: 14px; }
+
+    /* =============================================
+       8. TARIFS
+    ============================================= */
+    #tarifs { background: var(--lin); text-align: center; }
+
+    .tarifs-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 2rem; max-width: 820px;
+      margin: 3rem auto 1.5rem;
     }
 
-    .about-text h3 {
-      font-size: 1.4rem;
-      color: var(--green);
-      margin-bottom: 1rem;
+    .tarif-card {
+      background: var(--blanc); border-radius: 16px; padding: 2.5rem 2rem;
+      border: 2px solid rgba(42,90,78,.09);
+      transition: transform .2s, box-shadow .2s, border-color .2s;
     }
-
-    .about-text p { color: var(--gray); margin-bottom: 1rem; }
-
-    /* SERVICES */
-    #services { background: var(--green-pale); }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
+    .tarif-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(42,90,78,.1);
+      border-color: var(--or);
     }
+    .tarif-card h3   { color: var(--vert); font-size: 20px; margin-bottom: 1rem; }
+    .tarif-price     { display: block; font-family: 'Lora',serif; font-size: 36px; font-weight: 700; color: var(--or); margin-bottom: .5rem; }
+    .tarif-desc      { font-size: 14px; color: #6b7c79; line-height: 1.7; }
 
-    .card {
-      background: var(--white);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      transition: transform 0.2s, box-shadow 0.2s;
+    .tarif-mention { font-size: 13px; color: #6b7c79; font-style: italic; margin-bottom: 2rem; }
+
+    /* =============================================
+       9. CONTACT
+    ============================================= */
+    #contact { background: var(--foret); text-align: center; }
+
+    .contact-logo { margin: 0 auto 2rem; }
+
+    .contact-blocks {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 1.25rem; margin-bottom: 3rem;
     }
-
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-
-    .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-
-    .card h3 { font-size: 1.1rem; color: var(--green); margin-bottom: 0.5rem; }
-
-    .card p { color: var(--gray); font-size: 0.95rem; }
-
-    /* CONTACT */
-    #contact { background: var(--white); }
-
-    form {
-      max-width: 540px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .contact-block {
+      background: var(--vert); border-radius: 10px;
+      padding: 1.1rem 1.75rem;
+      font-size: 15px; font-weight: 600; color: var(--blanc);
+      text-decoration: none;
+      transition: background .2s;
     }
+    .contact-block:hover { background: #1e4238; }
 
-    form input, form textarea {
-      padding: 0.85rem 1.1rem;
-      border: 1.5px solid #ddd;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: border-color 0.2s;
-      outline: none;
-    }
-
-    form input:focus, form textarea:focus { border-color: var(--green-light); }
-
-    form textarea { min-height: 140px; resize: vertical; }
-
-    form .btn { align-self: flex-start; border: none; cursor: pointer; }
-
-    /* FOOTER */
+    /* =============================================
+       10. FOOTER
+    ============================================= */
     footer {
-      background: var(--green);
-      color: rgba(255,255,255,0.85);
+      background: var(--foret);
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding: 3rem 2rem 0;
+    }
+    .footer-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      gap: 2rem; align-items: start;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .footer-brand-name { font-family: 'Lora',serif; font-weight: 700; font-size: 20px; color: var(--blanc); }
+
+    .footer-center { text-align: center; color: rgba(255,255,255,.45); font-size: 13px; line-height: 1.8; }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .4rem; align-items: flex-end; }
+    .footer-links a {
+      color: rgba(255,255,255,.5); font-size: 13px; text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--or); }
+
+    .footer-bottom {
+      max-width: 1100px; margin: 2rem auto 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,.07);
       text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
+      font-size: 12px; color: rgba(255,255,255,.25);
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 680px) {
-      nav ul { display: none; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    /* =============================================
+       RESPONSIVE — Tablette
+    ============================================= */
+    @media (max-width: 768px) {
+      h1 { font-size: 34px; }
+      h2 { font-size: 26px; }
+      section { padding: 64px 1.5rem; }
+
+      .nav-links, .nav-links + .btn { display: none; }
+      .hamburger { display: flex; }
+
+      .stats         { grid-template-columns: 1fr; }
+      .equip-grid    { grid-template-columns: 1fr; }
+      .services-cols { grid-template-columns: 1fr; gap: 2.5rem; }
+      .ambiance-grid { grid-template-columns: 1fr; }
+      .access-grid   { grid-template-columns: 1fr; }
+      .tarifs-grid   { grid-template-columns: 1fr; max-width: 420px; }
+      .pourquoi-grid { grid-template-columns: 1fr; }
+      .contact-blocks { flex-direction: column; align-items: center; }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .footer-brand { justify-content: center; }
+      .footer-links { align-items: center; }
+    }
+
+    /* =============================================
+       RESPONSIVE — Mobile
+    ============================================= */
+    @media (max-width: 480px) {
+      h1 { font-size: 28px; }
+      section { padding: 52px 1.1rem; }
+      #navbar { padding: 0 1.1rem; }
+      .badges { flex-direction: column; align-items: center; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .stat-num { font-size: 26px; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="#hero" class="logo">Hortiloft</a>
-    <ul>
-      <li><a href="#about">À propos</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- =========================================
+     NAVBAR
+========================================= -->
+<nav id="navbar">
+  <a href="#hero" class="nav-brand">
+    <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="23" fill="white" stroke="#EAF3F0" stroke-width="1"/>
+      <path d="M9 23 Q13.5 17 18 23 Q22.5 29 27 23 Q31.5 17 36 23" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      <line x1="24" y1="23" x2="24" y2="36" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="16" y1="36" x2="32" y2="36" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-brand-name">HortiLoft</span>
+  </a>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div>
-      <h1>Cultivez votre espace,<br>révélez votre jardin</h1>
-      <p>Hortiloft vous accompagne dans la création et l'entretien d'espaces verts sur mesure, pour particuliers et professionnels.</p>
-      <a href="#contact" class="btn">Demander un devis</a>
+  <ul class="nav-links">
+    <li><a href="#presentation">Espace</a></li>
+    <li><a href="#equipements">Équipements</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#accessibilite">Accès</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a href="#contact" class="btn btn-vert">Réserver</a>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="nav-mobile">
+  <a href="#presentation" onclick="closeMob()">Espace</a>
+  <a href="#equipements"  onclick="closeMob()">Équipements</a>
+  <a href="#services"     onclick="closeMob()">Services</a>
+  <a href="#accessibilite" onclick="closeMob()">Accès</a>
+  <a href="#contact"      onclick="closeMob()">Contact</a>
+  <a href="#contact" class="btn btn-vert" onclick="closeMob()">Réserver</a>
+</div>
+
+<!-- =========================================
+     HERO
+========================================= -->
+<section id="hero">
+  <div class="hero-inner fi">
+    <svg class="hero-logomark" width="80" height="80" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="24" fill="white"/>
+      <path d="M9 23 Q13.5 17 18 23 Q22.5 29 27 23 Q31.5 17 36 23" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      <line x1="24" y1="23" x2="24" y2="36" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="16" y1="36" x2="32" y2="36" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>
+
+    <p class="hero-eyebrow">Espace de réunion · Amiens</p>
+    <h1>HortiLoft</h1>
+    <p class="hero-tagline">Un lieu professionnel, équipé et inspirant</p>
+    <p class="hero-loc">À deux pas des Hortillonnages d'Amiens</p>
+
+    <div class="badges">
+      <span class="badge">20–30 personnes</span>
+      <span class="badge">Wi-Fi inclus</span>
+      <span class="badge">Parking gratuit</span>
     </div>
-  </section>
 
-  <!-- À PROPOS -->
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title">À propos</h2>
-      <p class="section-sub">Une passion pour le végétal, une expertise au service de vos projets.</p>
-      <div class="about-grid">
-        <div style="background: var(--green-pale); border-radius: 16px; aspect-ratio: 4/3;"></div>
-        <div class="about-text">
-          <h3>Notre histoire</h3>
-          <p>Hortiloft est né de la conviction que chaque espace mérite d'être transformé en un lieu vivant, verdoyant et accueillant.</p>
-          <p>Notre équipe de paysagistes passionnés met son savoir-faire au service de vos envies, des jardins privés aux terrasses d'entreprise.</p>
-          <a href="#contact" class="btn">Nous contacter</a>
-        </div>
+    <div class="hero-btns">
+      <a href="#contact"      class="btn btn-or">Réserver cet espace</a>
+      <a href="#presentation" class="btn btn-outline">Découvrir</a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     PRÉSENTATION
+========================================= -->
+<section id="presentation">
+  <div class="container fi">
+    <span class="tag">Notre espace</span>
+    <h2 class="section-title">Un espace pensé pour vos événements professionnels</h2>
+    <p class="sub wide">HortiLoft, c'est bien plus qu'un simple lieu de réunion. Situé au cœur d'Amiens, à quelques pas du célèbre Musée des Hortillonnages, notre espace offre un cadre unique, calme et verdoyant — loin des zones d'activités banales. Idéal pour vos réunions, formations, séminaires, ateliers, team-buildings et bien plus encore.</p>
+
+    <div class="stats">
+      <div class="stat-card fi">
+        <span class="stat-num">20–30</span>
+        <span class="stat-lbl">personnes</span>
+      </div>
+      <div class="stat-card fi">
+        <span class="stat-num">100%</span>
+        <span class="stat-lbl">modulable</span>
+      </div>
+      <div class="stat-card fi">
+        <span class="stat-num" style="font-size:22px;">Clé en main</span>
+        <span class="stat-lbl">solution</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="container">
-      <h2 class="section-title">Nos services</h2>
-      <p class="section-sub">Des prestations complètes pour tous vos projets d'aménagement paysager.</p>
-      <div class="services-grid">
-        <div class="card">
-          <div class="card-icon">🌿</div>
-          <h3>Création de jardins</h3>
-          <p>Conception et réalisation d'espaces verts sur mesure, adaptés à votre style et votre terrain.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">✂️</div>
-          <h3>Entretien</h3>
-          <p>Taille, tonte, désherbage et soin des plantations tout au long de l'année.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🌸</div>
-          <h3>Plantation</h3>
-          <p>Sélection et mise en place de végétaux adaptés à votre sol et à votre exposition.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🏡</div>
-          <h3>Aménagement extérieur</h3>
-          <p>Terrasses, allées, clôtures et éléments décoratifs pour sublimer vos extérieurs.</p>
-        </div>
+<!-- =========================================
+     ÉQUIPEMENTS
+========================================= -->
+<section id="equipements">
+  <div class="container fi">
+    <span class="tag">Équipements</span>
+    <h2 class="section-title">Équipements professionnels</h2>
+
+    <div class="equip-grid">
+      <div class="equip-item"><span class="dot-or"></span><span>Wi-Fi haut débit professionnel</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Grand écran HD de présentation</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Tableau blanc interactif</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Climatisation & chauffage</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Luminosité naturelle exceptionnelle</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Isolation acoustique soignée</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Jukebox & ambiance musicale</span></div>
+      <div class="equip-item"><span class="dot-or"></span><span>Prises & connectique complète</span></div>
+    </div>
+
+    <div class="equip-banner">
+      <strong>Configuration modulable</strong>
+      <p>Tables et chaises repositionnables selon vos besoins</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     SERVICES
+========================================= -->
+<section id="services">
+  <div class="container fi">
+    <span class="tag">Services</span>
+    <h2 class="section-title">Services inclus & cuisine</h2>
+
+    <div class="services-cols">
+      <div>
+        <ul class="service-list">
+          <li><span class="dot-or-sm"></span>Café & thé à volonté</li>
+          <li><span class="dot-or-sm"></span>Eau offerte</li>
+          <li><span class="dot-or-sm"></span>Cuisine équipée en libre accès</li>
+          <li><span class="dot-or-sm"></span>Coin détente & espace convivialité</li>
+          <li><span class="dot-or-sm"></span>Livraison de repas possible</li>
+          <li><span class="dot-or-sm"></span>Accompagnement personnalisé</li>
+        </ul>
+      </div>
+      <div class="cuisine-box">
+        <h3>Une cuisine pensée pour vos pauses</h3>
+        <p>Notre cuisine entièrement équipée met à votre disposition un îlot central convivial, un bar à hauteur avec ses 6 tabourets et un éclairage doré chaleureux. L'espace idéal pour des pauses détente, des repas partagés ou des moments informels entre deux sessions de travail.</p>
       </div>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="container">
-      <h2 class="section-title">Contact</h2>
-      <p class="section-sub">Un projet ? Une question ? Écrivez-nous, nous vous répondons rapidement.</p>
-      <form>
-        <input type="text" placeholder="Votre nom" required />
-        <input type="email" placeholder="Votre email" required />
-        <input type="text" placeholder="Sujet" />
-        <textarea placeholder="Votre message..."></textarea>
-        <button type="submit" class="btn">Envoyer</button>
-      </form>
+    <div class="services-banner">
+      Formules sur mesure &middot; Prestations adaptées à vos besoins
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <p>&copy; 2026 Hortiloft — Tous droits réservés</p>
-  </footer>
+<!-- =========================================
+     AMBIANCE
+========================================= -->
+<section id="ambiance">
+  <div class="container fi">
+    <span class="tag">Atmosphère</span>
+    <span class="ambiance-or">Calme, verdoyant, créatif</span>
+    <h2 class="section-title white">Bien plus qu'un espace de travail</h2>
+    <p class="ambiance-body">HortiLoft propose une atmosphère soignée et chaleureuse, pensée pour favoriser la concentration, la créativité et les échanges — avec un piano droit vintage, un coin détente, un jukebox Pioneer, et des espaces lumineux qui changent du bureau ordinaire.</p>
 
+    <div class="ambiance-grid">
+      <div class="ambiance-card"><h3>Environnement verdoyant & apaisant</h3></div>
+      <div class="ambiance-card"><h3>Piano droit vintage & ambiance musicale</h3></div>
+      <div class="ambiance-card"><h3>Mobilier confortable haut de gamme</h3></div>
+      <div class="ambiance-card"><h3>Lumière naturelle toute la journée</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     ACCESSIBILITÉ
+========================================= -->
+<section id="accessibilite">
+  <div class="container fi">
+    <span class="tag">Accès</span>
+    <h2 class="section-title">Accessibilité & Localisation</h2>
+    <p class="sub">Tout est pensé pour que votre journée se passe sans accroc.</p>
+
+    <div class="access-grid">
+      <div class="access-card">
+        <h3>Parking gratuit</h3>
+        <p>Places disponibles pour tous les participants</p>
+      </div>
+      <div class="access-card">
+        <h3>Accès PMR</h3>
+        <p>L'espace est entièrement accessible aux personnes à mobilité réduite</p>
+      </div>
+      <div class="access-card">
+        <h3>Transports</h3>
+        <p>Desserte en transports en commun depuis le centre d'Amiens</p>
+      </div>
+      <div class="access-card">
+        <h3>Proche centre-ville</h3>
+        <p>À quelques minutes du cœur d'Amiens et des Hortillonnages</p>
+      </div>
+    </div>
+
+    <div class="map-block">
+      <div class="map-pin">📍</div>
+      <strong>Amiens, Somme — Hauts-de-France</strong>
+      <span>À deux pas du Musée des Hortillonnages d'Amiens</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     POURQUOI HORTILOFT
+========================================= -->
+<section id="pourquoi">
+  <div class="container fi">
+    <span class="tag">Nos atouts</span>
+    <h2 class="section-title white center">Pourquoi choisir HortiLoft ?</h2>
+
+    <div class="pourquoi-grid">
+      <div class="pourquoi-card">
+        <h3>Équipement pro complet</h3>
+        <p>Tout ce qu'il faut pour vos événements</p>
+      </div>
+      <div class="pourquoi-card">
+        <h3>Confort supérieur</h3>
+        <p>Mobilier haut de gamme pour journées longues</p>
+      </div>
+      <div class="pourquoi-card">
+        <h3>Cadre exceptionnel</h3>
+        <p>Hortillonnages, nature, calme & inspiration</p>
+      </div>
+      <div class="pourquoi-card">
+        <h3>Services clé en main</h3>
+        <p>Café, eau, cuisine, accompagnement inclus</p>
+      </div>
+      <div class="pourquoi-card">
+        <h3>Parking & PMR</h3>
+        <p>Aucun souci logistique pour vos invités</p>
+      </div>
+      <div class="pourquoi-card">
+        <h3>100% modulable</h3>
+        <p>Adaptation à chaque type d'événement</p>
+      </div>
+      <div class="pourquoi-card">
+        <h3>Solution sur mesure</h3>
+        <p>Formules personnalisées pour chaque besoin</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     TARIFS
+========================================= -->
+<section id="tarifs">
+  <div class="container fi">
+    <span class="tag">Tarifs</span>
+    <h2 class="section-title center">Nos formules</h2>
+
+    <div class="tarifs-grid">
+      <div class="tarif-card">
+        <h3>Demi-journée</h3>
+        <span class="tarif-price">120 €</span>
+        <p class="tarif-desc">À partir de — matin ou après-midi, jusqu'à 30 personnes</p>
+      </div>
+      <div class="tarif-card">
+        <h3>Journée complète</h3>
+        <span class="tarif-price">Sur devis</span>
+        <p class="tarif-desc">Formule tout inclus, services personnalisés</p>
+      </div>
+    </div>
+
+    <p class="tarif-mention">Tous nos tarifs incluent Wi-Fi, café, eau et accompagnement</p>
+    <a href="#contact" class="btn btn-or">Demander un devis</a>
+  </div>
+</section>
+
+<!-- =========================================
+     CONTACT
+========================================= -->
+<section id="contact">
+  <div class="container fi">
+    <svg class="contact-logo" width="72" height="72" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="24" fill="white"/>
+      <path d="M9 23 Q13.5 17 18 23 Q22.5 29 27 23 Q31.5 17 36 23" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      <line x1="24" y1="23" x2="24" y2="36" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="16" y1="36" x2="32" y2="36" stroke="#2A5A4E" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>
+
+    <h2 class="section-title white">Organisez votre prochain événement chez HortiLoft</h2>
+    <p style="color:rgba(255,255,255,.7); font-size:16px; max-width:540px; margin: 1rem auto 3rem;">Disponible pour réunions, formations, séminaires, ateliers et bien plus encore.</p>
+
+    <div class="contact-blocks">
+      <a href="tel:+33756956495"      class="contact-block">+33 7 56 95 64 95</a>
+      <a href="mailto:hortiloft@gmail.com" class="contact-block">hortiloft@gmail.com</a>
+      <span class="contact-block">Amiens, Somme — Hauts-de-France</span>
+    </div>
+
+    <a href="mailto:hortiloft@gmail.com" class="btn btn-or" style="font-size:14px; padding:16px 44px;">
+      Réserver cet espace
+    </a>
+  </div>
+</section>
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+<footer>
+  <div class="footer-grid">
+    <a href="#hero" class="footer-brand">
+      <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="24" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <path d="M9 23 Q13.5 17 18 23 Q22.5 29 27 23 Q31.5 17 36 23" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <line x1="24" y1="23" x2="24" y2="36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="16" y1="36" x2="32" y2="36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span class="footer-brand-name">HortiLoft</span>
+    </a>
+
+    <div class="footer-center">
+      Espace de réunion<br>Amiens, Somme — Hauts-de-France
+    </div>
+
+    <nav>
+      <ul class="footer-links">
+        <li><a href="#presentation">Espace</a></li>
+        <li><a href="#equipements">Équipements</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="tel:+33756956495">+33 7 56 95 64 95</a></li>
+        <li><a href="mailto:hortiloft@gmail.com">hortiloft@gmail.com</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">© 2024 HortiLoft — Tous droits réservés</div>
+</footer>
+
+<script>
+  // Navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navMob    = document.getElementById('nav-mobile');
+  hamburger.addEventListener('click', () => navMob.classList.toggle('open'));
+  function closeMob() { navMob.classList.remove('open'); }
+
+  // Fade-in on scroll (Intersection Observer)
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.fi').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
